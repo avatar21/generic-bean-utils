@@ -267,7 +267,7 @@ public class GenericBeanUtils {
                 date = null;
             }
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
         }
 
         return date;

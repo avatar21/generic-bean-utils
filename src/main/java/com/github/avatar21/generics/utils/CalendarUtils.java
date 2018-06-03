@@ -81,17 +81,17 @@ public class CalendarUtils {
         try {
             targetDate = Regexp.DATE_FORMAT_FULL_WITH_MISEC.parse(targetTime);
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
         }
         try {
             fromDate = Regexp.DATE_FORMAT_FULL_WITH_MISEC.parse(filterFromTime);
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
         }
         try {
             toDate = Regexp.DATE_FORMAT_FULL_WITH_MISEC.parse(filterToTime);
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
         }
 
         Calendar calTarget = Calendar.getInstance();

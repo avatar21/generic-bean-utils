@@ -2,6 +2,8 @@ package com.github.avatar21.generics.utils;
 
 import com.github.avatar21.generics.handler.DefaultPredicateHandler;
 import com.github.avatar21.generics.model.IPredicate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
@@ -10,6 +12,8 @@ import java.util.Collection;
  * generic parent child filterable/ parsable/ aggregate-able utility function
  */
 public class ParentChildPredicate {
+    private static final Logger logger = LoggerFactory.getLogger(ParentChildPredicate.class);
+
     /**
      * <p>processor for filtering, parsable & aggregate-able handler based on typed-predicate</p>
      *
@@ -38,7 +42,7 @@ public class ParentChildPredicate {
                         }
                     }
                 } catch (InvocationTargetException | IllegalAccessException e) {
-                    e.printStackTrace();
+                    logger.error(e.getLocalizedMessage());
                 }
             }
         }

@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  * CSV resources utility functions
  */
 public class CSVResources {
-    private static Logger log = LoggerFactory.getLogger(CSVResources.class);
+    private static Logger logger = LoggerFactory.getLogger(CSVResources.class);
 
     /**
      * @param token specify the value seperator, by default a "," (comma), "\t" (tab)
@@ -68,7 +68,7 @@ public class CSVResources {
 
         try {
             // read currency data file
-            //log.info("csv file = " + csvFile);
+            //logger.info("csv file = " + csvFile);
             if (csvFile != null && csvFile.isFile()) {
                 csvFis = new FileInputStream(csvFileName);
 
@@ -93,35 +93,35 @@ public class CSVResources {
                         if (columnValues != null) {
                             Set<Integer> keys = columnMapping.keySet();
 
-                            //log.info(String.format("keys = %s", JSON.toJSONString(keys)));
+                            //logger.info(String.format("keys = %s", JSON.toJSONString(keys)));
                             try {
                                 T obj = null;
                                 String strValue = "";
                                 obj = clazz.getDeclaredConstructor().newInstance();
-                                //log.info(String.format("columnValues = %s", JSON.toJSONString(columnValues)));
+                                //logger.info(String.format("columnValues = %s", JSON.toJSONString(columnValues)));
                                 for (Integer key : keys) {
                                     strValue = columnValues[key];
                                     String fieldName = columnMapping.get(key);
                                     Class<?> fieldClazz = GenericBeanUtils.getDeclaredField(clazz, columnMapping.get(key)).getType();
-                                    //log.info(String.format("%s(%s) = %s", key, fieldClazz.getCanonicalName(), strValue));
+                                    //logger.info(String.format("%s(%s) = %s", key, fieldClazz.getCanonicalName(), strValue));
                                     GenericBeanUtils.setProperty(obj, fieldName, GenericBeanUtils.parseStringToGenericType(fieldClazz, strValue));
                                 }
-                                //log.info(String.format("[%d] bean = %s", rowIdx, JSON.toJSONString(obj, true)));
+                                //logger.info(String.format("[%d] bean = %s", rowIdx, JSON.toJSONString(obj, true)));
                                 listData.add(obj);
                                 ++parsedRows;
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.error(e.getLocalizedMessage());
                             }
                         }
                     }
                 }
             } else {
-                log.error(new StringBuffer()
+                logger.error(new StringBuffer()
                         .append("csv file[").append(csvFile)
                         .append("] not found").toString());
             }
         } catch (Exception e) {
-            log.error("", e);
+            logger.error("", e);
         } finally {
             if (csvFile != null) {
                 csvFile = null;
@@ -130,7 +130,7 @@ public class CSVResources {
                 csvFis.close();
             }
         }
-        log.info(String.format("\uD83D\uDE00 测试数据读入结果 = %d / %d", parsedRows, totalRows));
+        logger.info(String.format("\uD83D\uDE00 测试数据读入结果 = %d / %d", parsedRows, totalRows));
 
         return listData;
     }

@@ -16,7 +16,7 @@ import java.util.List;
  * JSON utility functions
  */
 public class JsonResources {
-    private static Logger log = Logger.getLogger(JsonResources.class);
+    private static Logger logger = Logger.getLogger(JsonResources.class);
 
     /**
      * <p>从json文件解析通用类集合</p>
@@ -40,7 +40,7 @@ public class JsonResources {
 
         try {
             // read currency data file
-            //log.info("csv file = " + csvFile);
+            //logger.info("csv file = " + csvFile);
             if (jsonFile != null && jsonFile.isFile()) {
                 jsonFis = new FileInputStream(jsonFile);
 
@@ -52,18 +52,18 @@ public class JsonResources {
 
                         if (listData != null && listData.size() > 0) {
                             for (T obj : listData) {
-                                log.debug(String.format("obj = %s", GenericBeanUtils.toJson(obj)));
+                                logger.debug(String.format("obj = %s", GenericBeanUtils.toJson(obj)));
                             }
                         }
                     }
                 }
             } else {
-                log.error(new StringBuffer()
+                logger.error(new StringBuffer()
                         .append("json file[").append(jsonFile)
                         .append("] not found").toString());
             }
         } catch (Exception e) {
-            log.error("获取地区数据错误", e);
+            logger.error("获取地区数据错误", e);
             throw e;
         } finally {
             if (jsonFile != null) {
@@ -73,7 +73,7 @@ public class JsonResources {
                 jsonFis.close();
             }
         }
-        log.info(String.format("\uD83D\uDE00 测试数据读入结果 = %s", GenericBeanUtils.toJson(listData)));
+        logger.info(String.format("\uD83D\uDE00 测试数据读入结果 = %s", GenericBeanUtils.toJson(listData)));
 
         return listData;
     }
@@ -93,7 +93,7 @@ public class JsonResources {
         try {
             result = parseBeanCollectionFromJson(jsonFileName, clazz);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
         }
         return result;
     }
@@ -146,7 +146,7 @@ public class JsonResources {
                     }
                 }
             } else {
-                log.error(new StringBuffer()
+                logger.error(new StringBuffer()
                         .append("json file[").append(jsonFile)
                         .append("] not found").toString());
                 System.out.println(new StringBuffer()
@@ -154,8 +154,7 @@ public class JsonResources {
                         .append("] not found").toString());
             }
         } catch (Exception e) {
-            log.error("获取json数据错误", e);
-            e.printStackTrace();
+            logger.error("获取json数据错误", e);
         } finally {
             if (jsonFile != null) {
                 jsonFile = null;
@@ -164,11 +163,11 @@ public class JsonResources {
                 try {
                     jsonFis.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error(e.getLocalizedMessage());
                 }
             }
         }
-        log.info(String.format("\uD83D\uDE00 json数据读入结果 = %s", GenericBeanUtils.toJson(bean)));
+        logger.info(String.format("\uD83D\uDE00 json数据读入结果 = %s", GenericBeanUtils.toJson(bean)));
 
         return bean;
     }

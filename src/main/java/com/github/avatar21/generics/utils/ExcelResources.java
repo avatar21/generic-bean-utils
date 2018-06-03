@@ -21,7 +21,7 @@ import java.util.Map;
  * Excel resources utility functions
  */
 public class ExcelResources {
-    private static Logger log = Logger.getLogger(ExcelResources.class);
+    private static Logger logger = Logger.getLogger(ExcelResources.class);
 
     /**
      * read from a "*.csv" file, return a List (row) of Maps
@@ -99,13 +99,13 @@ public class ExcelResources {
                                 instance,
                                 fieldName,
                                 GenericBeanUtils.parseStringToGenericType(fieldClazz, cellVal));
-                        //log.info(String.format("行#%d|列#%d[ %s(%s类) \uD83D\uDC49 %s]", row.getRowNum(), cell.getColumnIndex(), fieldName, ((fieldClazz != null)? fieldClazz.getSimpleName(): null), cellVal));
+                        //logger.info(String.format("行#%d|列#%d[ %s(%s类) \uD83D\uDC49 %s]", row.getRowNum(), cell.getColumnIndex(), fieldName, ((fieldClazz != null)? fieldClazz.getSimpleName(): null), cellVal));
                     }
                 }
                 listData.add(instance);
             }
         }
-        log.info(String.format("\uD83D\uDE00 测试数据读入结果 = %d / %d", parsedRows, totalRows));
+        logger.info(String.format("\uD83D\uDE00 测试数据读入结果 = %d / %d", parsedRows, totalRows));
 
         return listData;
     }
@@ -129,18 +129,8 @@ public class ExcelResources {
             } else {
                 throw new FileNotFoundException(String.format("Following path not found: \"%s\"", fileName));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+        } catch (IOException | InvocationTargetException | IllegalAccessException | NoSuchFieldException | InstantiationException | NoSuchMethodException e) {
+            logger.error(e.getLocalizedMessage());
         }
         return result;
     }
