@@ -19,10 +19,10 @@ public class CalendarUtils {
     private static final Logger logger = LoggerFactory.getLogger(CalendarUtils.class);
 
     /**
-     * <p>日期加一天</p>
+     * <p>add one day to given date</p>
      *
-     * @param date 日期
-     * @return {@link Date}已修改日期
+     * @param date given date
+     * @return {@link Date} modified date (next day of given date)
      */
     public static Date addOneDay(Date date) {
         Calendar calendar = new GregorianCalendar();
@@ -33,10 +33,10 @@ public class CalendarUtils {
     }
 
     /**
-     * <p>获取日期，一天开始时间 (HH:mm:ss.SSS = 00:00:00.000)</p>
+     * <p>get day start date (HH:mm:ss.SSS = 00:00:00.000)</p>
      *
-     * @param date 日期
-     * @return {@link Date}已修改日期
+     * @param date date
+     * @return {@link Date} modified date
      */
     public static Date getDayStartTime(Date date) {
         Calendar cal = Calendar.getInstance();
@@ -49,10 +49,10 @@ public class CalendarUtils {
     }
 
     /**
-     * <p>获取日期，第二天开始前一毫秒的时间 (HH:mm:ss.SSS = 23:59:59.999)</p>
+     * <p>get date with 1 millisecond before next day (HH:mm:ss.SSS = 23:59:59.999)</p>
      *
-     * @param date 日期
-     * @return {@link Date}已修改日期
+     * @param date given date
+     * @return {@link Date} modified date
      */
     public static Date getDayEndTime(Date date) {
         Calendar cal = Calendar.getInstance();
@@ -65,12 +65,12 @@ public class CalendarUtils {
     }
 
     /**
-     * <p>verify time is fall within 2 diff time</p>
+     * <p>verify given date is between date range</p>
      *
-     * @param targetTime 校验日期(格式: yyyy-MM-dd HH:mm:ss.SSS)
-     * @param filterFromTime 开始范围日期(格式: yyyy-MM-dd HH:mm:ss.SSS)
-     * @param filterToTime 结束范围日期(格式: yyyy-MM-dd HH:mm:ss.SSS)
-     * @return whether is within time flag
+     * @param targetTime given date (format: yyyy-MM-dd HH:mm:ss.SSS)
+     * @param filterFromTime start compound date(format: yyyy-MM-dd HH:mm:ss.SSS)
+     * @param filterToTime end compound date (format: yyyy-MM-dd HH:mm:ss.SSS)
+     * @return whether is between date range
      */
     public static Boolean withinTime(String targetTime, String filterFromTime, String filterToTime) {
         Boolean isWithinTime = false;
@@ -117,10 +117,10 @@ public class CalendarUtils {
     }
 
     /**
-     * 转换字符串为日期
+     * verify and parse given string to date (yyyyMMdd)
      *
-     * @param strDate yyyyMMdd 格式
-     * @return 成功返回已转换的日期，失败则返回null
+     * @param strDate string date with format "yyyyMMdd"
+     * @return return either successfully parsed date, or null
      */
     public static Date verifyAndParseToDate08(String strDate) {
         Date date = null;
@@ -133,10 +133,10 @@ public class CalendarUtils {
     }
 
     /**
-     * 转换字符串为日期 (yyyy-MM-dd)
+     * verify and parse string to date (yyyy-MM-dd)
      *
-     * @param strDate yyyy-MM-dd 格式
-     * @return 成功返回已转换的日期，失败则返回null
+     * @param strDate string date with format "yyyy-MM-dd"
+     * @return return either successfully parsed date, or null
      */
     public static Date verifyAndParseToDate10(String strDate) {
         Date date = null;
@@ -149,10 +149,10 @@ public class CalendarUtils {
     }
 
     /**
-     * 转换字符串为日期
+     * verify and parse string to date (yyyyMMddHHmmss)
      *
-     * @param strDate ’yyyyMMddHHmmss‘ 格式
-     * @return 成功返回已转换的日期，失败则返回null
+     * @param strDate string date with format "yyyyMMddHHmmss"
+     * @return return either successfully parsed date, or null
      */
     public static Date verifyAndParseToDate14(String strDate) {
         Date date = null;
@@ -165,22 +165,22 @@ public class CalendarUtils {
     }
 
     /**
-     * 获取今天之前或之后的时间
+     * add or minus n time unit from now
      *
-     * @param n 整数
-     * @param type Calendar.DAY_OF_MONTH, Calendar.MONTH ...
-     * @return 日期
+     * @param n (signed integer) time operand n
+     * @param calUnit {@link CalendarUnit} time unit, given like CalendarUnit.DAY_OF_MONTH, CalendarUnit.MONTH ...
+     * @return altered date
      */
-    public static Date getNDaysFromNow(int n, CalendarUnit type) {
-        return getNDaysFrom(new Date(), n, type);
+    public static Date getNDaysFromNow(int n, CalendarUnit calUnit) {
+        return getNDaysFrom(new Date(), n, calUnit);
     }
 
     /**
-     * 获取指定日期，之前或之后的时间
+     * add or minus n time unit from given date
      *
-     * @param date 开始日期
-     * @param n 整数 +(正数)之后，-(负数)之前
-     * @param calUnit {@link CalendarUnit} CalendarUnit.DAY, CalendarUnit.MONTH ...
+     * @param date given date
+     * @param n integer operand, positive for future date, negative for passed date
+     * @param calUnit {@link CalendarUnit} time unit, e.g.: CalendarUnit.DAY, CalendarUnit.MONTH ...
      * @return 结束日期
      */
     public static Date getNDaysFrom(Date date, int n, CalendarUnit calUnit) {
@@ -191,21 +191,21 @@ public class CalendarUtils {
     }
 
     /**
-     * 是否闰年
+     * check if given year is a leap year
      *
-     * @param year n年份
-     * @return 是否闰年标识
+     * @param year integer year
+     * @return is leap year flag
      */
     public static boolean isLeapYear(int year) {
         return (year%4 == 0 && (year%100 != 0 || year%400 == 0));
     }
 
     /**
-     * 计算两个日期之间的差异
+     * finds out difference between 2 given dates
      *
-     * @param startDate 开始日期
-     * @param endDate 结束日期
-     * @return {@link TimeDuration} 解析结果(分年，月，日，分，秒，毫秒)
+     * @param startDate begin date
+     * @param endDate end date
+     * @return {@link TimeDuration} bean which describe time difference between two dates
      */
     public static TimeDuration calculateTimeDuration(Date startDate, Date endDate){
         TimeDuration duration = new TimeDuration();
@@ -232,11 +232,11 @@ public class CalendarUtils {
     }
 
     /**
-     * 计算两个日期之间的差异
+     * finds out realistic difference between 2 given dates (means take actual days of month, days of year into consideration)
      *
-     * @param startDate 开始日期
-     * @param endDate 结束日期
-     * @return {@link TimeDuration} 解析结果(分年，月，日，分，秒，毫秒)
+     * @param startDate begin date
+     * @param endDate end date
+     * @return {@link TimeDuration} bean which describe time difference between two dates
      */
     public static TimeDuration calculateTimeDurationRealistic(Date startDate, Date endDate){
         TimeDuration duration = new TimeDuration();
@@ -285,17 +285,16 @@ public class CalendarUtils {
     }
 
     /**
-     * <p>判断是否两个日期是同一天，忽略时间</p>
+     * <p>determine given date pair is within the same day (ignoring time)</p>
      *
-     * <p>传 28 Mar 2002 13:45 与 28 Mar 2002 06:01 返回true.
-     * 传 28 Mar 2002 13:45 与 12 Mar 2002 13:45 返回 false.
+     * <p>E.g: passing "28 Mar 2002 13:45" and "28 Mar 2002 06:01" yield true.
+     * passing "28 Mar 2002 13:45" and "12 Mar 2002 13:45" yield false.
      * </p>
      *
-     * @param date1  日期1, 非空
-     * @param date2  日期2, 非空
-     * @return true 如果它们是同一天
-     * @throws IllegalArgumentException 任何一个日期为空值
-     * @since 1.1.9
+     * @param date1  date 1 (not null)
+     * @param date2  date 2 (not null)
+     * @return true if they falls on the same day
+     * @throws IllegalArgumentException any date is null
      */
     public static boolean isSameDay(Date date1, Date date2) {
         if (date1 == null || date2 == null) {
@@ -309,17 +308,16 @@ public class CalendarUtils {
     }
 
     /**
-     <p>判断是否两个日期是同一个月，忽略时间</p>
+     * <p>determine given date pair is within the same month (ignoring time)</p>
      *
-     * <p>传 28 Mar 2002 13:45 与 28 Mar 2002 06:01 返回true.
-     * 传 28 Mar 2002 13:45 与 12 Apr 2002 13:45 返回 false.
+     * <p>E.g: passing "28 Mar 2002 13:45" and "28 Mar 2002 06:01" yield true.
+     * passing "28 Mar 2002 13:45" and "12 Apr 2002 13:45" yield false.
      * </p>
      *
-     * @param date1  日期1, 非空
-     * @param date2  日期2, 非空
-     * @return true 如果它们是同一个月
-     * @throws IllegalArgumentException 任何一个日期为空值
-     * @since 1.1.9
+     * @param date1  date 1 (not null)
+     * @param date2  date 2 (not null)
+     * @return true if they falls on the same month
+     * @throws IllegalArgumentException any date is null
      */
     public static boolean isSameMonth(Date date1, Date date2) {
         if (date1 == null || date2 == null) {
@@ -333,17 +331,16 @@ public class CalendarUtils {
     }
 
     /**
-     <p>判断是否两个日期是同一年，忽略时间</p>
+     * <p>determine given date pair is within the same year (ignoring time)</p>
      *
-     * <p>传 28 Mar 2002 13:45 与 28 Mar 2002 06:01 返回true.
-     * 传 28 Mar 2002 13:45 与 12 Mar 2003 13:45 返回 false.
+     * <p>E.g: passing "28 Mar 2002 13:45" and "28 Mar 2002 06:01" yield true.
+     * passing "28 Mar 2002 13:45" and "Mar 2003 13:45" yield false.
      * </p>
      *
-     * @param date1  日期1, 非空
-     * @param date2  日期2, 非空
-     * @return true 如果它们是同一年
-     * @throws IllegalArgumentException 任何一个日期为空值
-     * @since 1.1.9
+     * @param date1  date 1 (not null)
+     * @param date2  date 2 (not null)
+     * @return true if they falls on the same year
+     * @throws IllegalArgumentException any date is null
      */
     public static boolean isSameYear(Date date1, Date date2) {
         if (date1 == null || date2 == null) {
@@ -357,17 +354,16 @@ public class CalendarUtils {
     }
 
     /**
-     * <p>判断两个{@link Calendar} 类之间是否同一天，忽略时间。</p>
+     * <p>determine given {@link Calendar} pair is within the same day (ignoring time)</p>
      *
-     * <p>28 Mar 2002 13:45 与 28 Mar 2002 06:01 返回true.
-     * 28 Mar 2002 13:45 与 12 Mar 2002 13:45 返回 false.
+     * <p>E.g: passing "28 Mar 2002 13:45" and "28 Mar 2002 06:01" yield true.
+     * passing "28 Mar 2002 13:45" and "12 Mar 2002 13:45" yield false.
      * </p>
      *
-     * @param cal1  第一个日历类, 非空
-     * @param cal2  第二个日历类, 非空
-     * @return 若是同一天，则返回 true
-     * @throws IllegalArgumentException 任何一个日历为 <code>null</code>
-     * @since 1.1.9
+     * @param cal1  calendar 1 (not null)
+     * @param cal2  calendar 2 (not null)
+     * @return true if they falls on the same day
+     * @throws IllegalArgumentException any calendar is <code>null</code>
      */
     public static boolean isSameDay(Calendar cal1, Calendar cal2) {
         if (cal1 == null || cal2 == null) {
@@ -379,17 +375,16 @@ public class CalendarUtils {
     }
 
     /**
-     * <p>判断两个{@link Calendar} 类之间是否同一月，忽略时间。</p>
+     * <p>determine given {@link Calendar} pair is within the same month (ignoring time)</p>
      *
-     * <p>28 Mar 2002 13:45 与 28 Mar 2002 06:01 返回true.
-     * 28 Mar 2002 13:45 与 12 Apr 2002 13:45 返回 false.
+     * <p>E.g: passing "28 Mar 2002 13:45" and "28 Mar 2002 06:01" yield true.
+     * passing "28 Mar 2002 13:45" and "12 Apr 2002 13:45" yield false.
      * </p>
      *
-     * @param cal1  第一个日历类, 非空
-     * @param cal2  第二个日历类, 非空
-     * @return 若是同一月，则返回 true
-     * @throws IllegalArgumentException 任何一个日历为 <code>null</code>
-     * @since 1.1.9
+     * @param cal1  calendar 1 (not null)
+     * @param cal2  calendar 2 (not null)
+     * @return true if they falls on the same month
+     * @throws IllegalArgumentException any calendar is <code>null</code>
      */
     public static boolean isSameMonth(Calendar cal1, Calendar cal2) {
         if (cal1 == null || cal2 == null) {
@@ -401,17 +396,16 @@ public class CalendarUtils {
     }
 
     /**
-     * <p>判断两个{@link Calendar} 类之间是否同一年，忽略时间。</p>
+     * <p>determine given {@link Calendar} pair is within the same year (ignoring time)</p>
      *
-     * <p>28 Mar 2002 13:45 与 28 Mar 2002 06:01 返回true.
-     * 28 Mar 2002 13:45 与 12 Mar 2003 13:45 返回 false.
+     * <p>E.g: passing "28 Mar 2002 13:45" and "28 Mar 2002 06:01" yield true.
+     * passing "28 Mar 2002 13:45" and "12 Apr 2003 13:45" yield false.
      * </p>
      *
-     * @param cal1  第一个日历类, 非空
-     * @param cal2  第二个日历类, 非空
-     * @return 若是同一年，则返回 true
-     * @throws IllegalArgumentException 任何一个日历为 <code>null</code>
-     * @since 1.1.9
+     * @param cal1  calendar 1 (not null)
+     * @param cal2  calendar 2 (not null)
+     * @return true if they falls on the same year
+     * @throws IllegalArgumentException any calendar is <code>null</code>
      */
     public static boolean isSameYear(Calendar cal1, Calendar cal2) {
         if (cal1 == null || cal2 == null) {

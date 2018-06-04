@@ -1,30 +1,31 @@
 package com.github.avatar21.generics.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.avatar21.generics.constants.Regexp;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
  * JSON utility functions
  */
 public class JsonResources {
-    private static Logger logger = Logger.getLogger(JsonResources.class);
+    private static Logger logger = LoggerFactory.getLogger(JsonResources.class);
 
     /**
-     * <p>从json文件解析通用类集合</p>
+     * <p>parse json file into bean collection</p>
      *
-     * @param <T> 通用类
-     * @param jsonFileName "*.json"文件路径
-     * @param clazz 通用类的class
-     * @return 返回 {@link List}T类的集合
+     * @param <T> given bean class
+     * @param jsonFileName "*.json" file path
+     * @param clazz given bean class
+     * @return 返回 {@link List}T typed array list
      * @throws Exception exception
      */
     public static <T> List<T> parseBeanCollectionFromJson(String jsonFileName, Class<T> clazz) throws Exception {
@@ -35,9 +36,7 @@ public class JsonResources {
         File jsonFile = new File(filePath);
         String fileContent;
         ObjectMapper jsonMapper = new ObjectMapper();
-        // TODO remove date format here
-        SimpleDateFormat fmtDate = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
-        jsonMapper.setDateFormat(fmtDate);
+        jsonMapper.setDateFormat(Regexp.DATE_FORMAT_FULL_WITH_SEC);
 
         try {
             // read currency data file
@@ -64,9 +63,10 @@ public class JsonResources {
                         .append("] not found").toString());
             }
         } catch (Exception e) {
-            logger.error("获取地区数据错误", e);
+            logger.error("error while parsing bean from json", e);
             throw e;
         } finally {
+            // housekeeping
             if (jsonFile != null) {
                 jsonFile = null;
             }
@@ -74,52 +74,18 @@ public class JsonResources {
                 jsonFis.close();
             }
         }
-        logger.info(String.format("\uD83D\uDE00 测试数据读入结果 = %s", GenericBeanUtils.toJson(listData)));
+        logger.info("\uD83D\uDE00 parsed result = {}", GenericBeanUtils.toJson(listData));
 
         return listData;
     }
 
     /**
-     * <p>从json文件解析通用类集合</p>
+     * <p>parse json into bean(single)</p>
      *
-     * @param <T> 通用类
-     * @param clazz 通用类的class
-     * @return 返回 {@link List} T类的集合
-     */
-    public static <T> List<T> parseBeanCollectionFromJson(Class<T> clazz) {
-        String jsonFileName = String.format("data/shared/json/%s-list.json", clazz.getSimpleName());
-        System.out.println(String.format("filename = %s", jsonFileName));
-
-        List<T> result = null;
-        try {
-            result = parseBeanCollectionFromJson(jsonFileName, clazz);
-        } catch (Exception e) {
-            logger.error(e.getLocalizedMessage());
-        }
-        return result;
-    }
-
-    /**
-     * <p>从json文件解析通用类</p>
-     *
-     * @param <T> 数据类T
-     * @param clazz 数据类 T.class
-     * @return 数据类实例
-     */
-    public static <T> T parseBeanFromJson(Class<T> clazz) {
-        String jsonFileName = String.format("data/shared/json/%s.json", clazz.getSimpleName());
-        System.out.println(String.format("filename = %s", jsonFileName));
-
-        return parseBeanFromJson(jsonFileName, clazz);
-    }
-
-    /**
-     * <p>从json文件解析通用类</p>
-     *
-     * @param <T> 数据类T
-     * @param jsonFileName "*.json"文件路径
-     * @param clazz 数据类 T.class
-     * @return 数据类实例
+     * @param <T> bean type T
+     * @param jsonFileName "*.json" file path
+     * @param clazz bean class
+     * @return parsed bean of type T instance
      */
     public static <T> T parseBeanFromJson(String jsonFileName, Class<T> clazz) {
         T bean = null;
@@ -129,12 +95,11 @@ public class JsonResources {
         File jsonFile = new File(filePath);
         String fileContent = null;
         ObjectMapper jsonMapper = new ObjectMapper();
-        SimpleDateFormat fmtDate = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
-        jsonMapper.setDateFormat(fmtDate);
+        jsonMapper.setDateFormat(Regexp.DATE_FORMAT_FULL_WITH_SEC);
 
         try {
             // read json formatted file
-            System.out.println(String.format("valid = %s | %s", (jsonFile != null), (jsonFile.isFile())));
+            logger.debug("valid = {} | {}", (jsonFile != null), (jsonFile.isFile()));
             if (jsonFile != null && jsonFile.isFile()) {
                 jsonFis = new FileInputStream(jsonFile);
 
@@ -150,12 +115,9 @@ public class JsonResources {
                 logger.error(new StringBuffer()
                         .append("json file[").append(jsonFile)
                         .append("] not found").toString());
-                System.out.println(new StringBuffer()
-                        .append("json file[").append(jsonFile)
-                        .append("] not found").toString());
             }
         } catch (Exception e) {
-            logger.error("获取json数据错误", e);
+            logger.error("error while parsing json to bean", e);
         } finally {
             if (jsonFile != null) {
                 jsonFile = null;
@@ -168,7 +130,7 @@ public class JsonResources {
                 }
             }
         }
-        logger.info(String.format("\uD83D\uDE00 json数据读入结果 = %s", GenericBeanUtils.toJson(bean)));
+        logger.info("\uD83D\uDE00 parsed bean = {}", GenericBeanUtils.toJson(bean));
 
         return bean;
     }
