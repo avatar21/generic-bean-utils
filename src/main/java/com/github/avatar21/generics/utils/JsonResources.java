@@ -25,6 +25,7 @@ public class JsonResources {
      * @param jsonFileName "*.json"文件路径
      * @param clazz 通用类的class
      * @return 返回 {@link List}T类的集合
+     * @throws Exception exception
      */
     public static <T> List<T> parseBeanCollectionFromJson(String jsonFileName, Class<T> clazz) throws Exception {
         List<T> listData = null;

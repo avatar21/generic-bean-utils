@@ -26,17 +26,17 @@ public class ExcelResources {
     /**
      * read from a "*.csv" file, return a List (row) of Maps
      *
-     * @param clazz
-     * @param excelFileName
-     * @param columnMapping
-     * @param ignoreNumOfRows
-     * @param <T>
+     * @param clazz bean type class
+     * @param excelFileName excel file name
+     * @param columnMapping column header mapping to which field
+     * @param ignoreNumOfRows ignore line number
+     * @param <T> parse bean type
      * @return List of {@link T} objects, which allows you to retrieve row values by name instead of index
      * @throws IOException
-     * @throws InvocationTargetException
-     * @throws IllegalAccessException
-     * @throws NoSuchFieldException
-     * @throws InstantiationException
+     * @throws InvocationTargetException invocation target exception
+     * @throws IllegalAccessException illegal access exception
+     * @throws NoSuchFieldException no such method exception
+     * @throws InstantiationException instantiation exception
      */
     public static <T> List<T> parseBeanCollectionFromExcel(Class<T> clazz, String excelFileName, Map<Integer, String> columnMapping, Integer ignoreNumOfRows)
         throws IOException, InvocationTargetException, IllegalAccessException, NoSuchFieldException, InstantiationException, NoSuchMethodException {
@@ -111,12 +111,13 @@ public class ExcelResources {
     }
 
     /**
+     * parse given bean from excel file
      *
-     * @param clazz
-     * @param columnMapping
-     * @param ignoreNumOfRows
-     * @param <T>
-     * @return
+     * @param clazz given bean class
+     * @param columnMapping column mapping with excel header
+     * @param ignoreNumOfRows ignore line number
+     * @param <T> given bean type
+     * @return list of parsed bean
      */
     public static <T> List<T> parseBeanCollectionFromExcel(Class<T> clazz, Map<Integer, String> columnMapping, Integer ignoreNumOfRows) {
         List<T> result = null;

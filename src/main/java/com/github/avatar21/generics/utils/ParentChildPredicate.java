@@ -15,7 +15,9 @@ public class ParentChildPredicate {
     private static final Logger logger = LoggerFactory.getLogger(ParentChildPredicate.class);
 
     /**
-     * <p>processor for filtering, parsable & aggregate-able handler based on typed-predicate</p>
+     * <p>
+     *     processor for filtering, parsable and aggregate-able handler based on typed-predicate
+     * </p>
      *
      * @param sources collection of child
      * @param target parent

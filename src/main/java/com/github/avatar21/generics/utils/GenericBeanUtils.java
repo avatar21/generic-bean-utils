@@ -32,14 +32,14 @@ public class GenericBeanUtils {
     private static ObjectMapper jsonMapper;
     /**
      * <p>
-     *     parse and convert into supported Java & enum type (from string), e.g:
-     *     <pre><code>
-     *         Double mDouble = (Double) GenericBeanUtils.parseStringToGenericType(Double.class, "1.2");
-     *         SexEnum sex = (SexEnum) GenericBeanUtils.parseStringToGenericType(SexEnum.class, "MALE");
-     *         Boolean mBoolean = (Boolean) GenericBeanUtils.parseStringToGenericType(Boolean.class, "0");
-     *         Boolean mBoolean2 = (Boolean) GenericBeanUtils.parseStringToGenericType(Boolean.class, "true");
-     *     </code></pre>
+     *     parse and convert into supported Java and enum type (from string), e.g:
      * </p>
+     * <pre><code>
+     *  Double mDouble = (Double) GenericBeanUtils.parseStringToGenericType(Double.class, "1.2");
+     *  SexEnum sex = (SexEnum) GenericBeanUtils.parseStringToGenericType(SexEnum.class, "MALE");
+     *  Boolean mBoolean = (Boolean) GenericBeanUtils.parseStringToGenericType(Boolean.class, "0");
+     *  Boolean mBoolean2 = (Boolean) GenericBeanUtils.parseStringToGenericType(Boolean.class, "true");
+     * </code></pre>
      *
      * @param fieldClazz field/ property class
      * @param fieldVal field/ property value (in String)
@@ -69,12 +69,12 @@ public class GenericBeanUtils {
     /**
      * <p>
      *     parse and convert into supported Java type, e.g.:
-     *     <pre>
-     *         Double mDouble = GenericBeanUtils.parseStringToJavaType(Double.class, "1.2");
-     *         Boolean mBoolean = GenericBeanUtils.parseStringToJavaType(Boolean.class, "0");
-     *         Boolean mBoolean2 = GenericBeanUtils.parseStringToJavaType(Boolean.class, "true");
-     *     </pre>
      * </p>
+     * <pre><code>
+     *  Double mDouble = GenericBeanUtils.parseStringToJavaType(Double.class, "1.2");
+     *  Boolean mBoolean = GenericBeanUtils.parseStringToJavaType(Boolean.class, "0");
+     *  Boolean mBoolean2 = GenericBeanUtils.parseStringToJavaType(Boolean.class, "true");
+     * </code></pre>
      *
      * @param fieldClazz field/ property class
      * @param fieldVal field/ property value
@@ -134,10 +134,10 @@ public class GenericBeanUtils {
     /**
      * <p>
      *     可解析并自动转换的支持枚举类, 示例:
-     *     <pre>
-     *         SexEnum sex = (SexEnum) GenericBeanUtils.parseStringToGenericEnumType(SexEnum.class, "MALE");
-     *     </pre>
      * </p>
+     * <pre><code>
+     *     SexEnum sex = (SexEnum) GenericBeanUtils.parseStringToGenericEnumType(SexEnum.class, "MALE");
+     * </code></pre>
      *
      * @param fieldClazz enum type class
      * @param fieldVal enum value in string
@@ -244,15 +244,13 @@ public class GenericBeanUtils {
      * <p>以字符串解析日期</p>
      *
      * @param strDateVal 日期字符串
-     * <p>
-     *   支持日期格式:
+     * 支持日期格式:
      *   <ul>
      *     <li>yyyy-MM-dd</li>
      *     <li>yyyy-MM-dd HH:mm:ss</li>
      *     <li>yyyy-MM-dd HH:mm:ss.SSS</li>
      *   </ul>
-     * </p>
-     * @return
+     * @return parsed date
      */
     public static Date genericParseDate(String strDateVal) {
         Date date = null;
@@ -300,8 +298,8 @@ public class GenericBeanUtils {
      *
      * @param clazz belonging class
      * @param propertyName property name
-     * @return
-     * @throws NoSuchFieldException
+     * @return {@link Field} field
+     * @throws NoSuchFieldException no such field exception
      */
     public static Field getDeclaredField(Class clazz, String propertyName) throws NoSuchFieldException {
         Assert.notNull(clazz);

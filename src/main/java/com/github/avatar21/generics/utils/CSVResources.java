@@ -46,16 +46,20 @@ public class CSVResources {
      * read from a "*.csv" file, return a List (row) of Maps
      * (columns, which using "column name" as key, and value stored in java.lang.* types)
      * csv format must be following below structure:
-     * [column_name_1], [column_name_2], [...] <- 1st line (ignore row)
-     * [column_value_1], [column_value_2], [...] <- 2nd line (1st row of data)
-     * [column_value_1], [column_value_2], [...] < 3rdh line (2nd row of data, and so on)
+     * [column_name_1], [column_name_2], [...] &lt;- 1st line (ignore row)
+     * [column_value_1], [column_value_2], [...] &lt;- 2nd line (1st row of data)
+     * [column_value_1], [column_value_2], [...] &lt;- 3rdh line (2nd row of data, and so on)
      *
-     * @param clazz
-     * @param csvFileName
-     * @param columnMapping
-     * @param ignoreNumOfRows
-     * @param <T>
+     * @param clazz bean class
+     * @param csvFileName csv file name
+     * @param columnMapping column/ field mapping
+     * @param ignoreNumOfRows ignore line no.
+     * @param <T> bean type
      * @return List of HashMap objects, which allows you to retrieve row values by name instead of index
+     * @throws IOException i/o exception
+     * @throws InvocationTargetException invocation exception
+     * @throws IllegalAccessException illegal exception
+     * @throws NoSuchFieldException no such file exception
      */
     public static <T> List<T> parseBeanFromCSVFile(Class<T> clazz, String csvFileName, Map<Integer, String> columnMapping, Integer ignoreNumOfRows) throws
             IOException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {

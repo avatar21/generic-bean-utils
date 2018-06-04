@@ -65,12 +65,12 @@ public class CalendarUtils {
     }
 
     /**
-     * <p>校验时间是否在测试范围内</p>
+     * <p>verify time is fall within 2 diff time</p>
      *
      * @param targetTime 校验日期(格式: yyyy-MM-dd HH:mm:ss.SSS)
      * @param filterFromTime 开始范围日期(格式: yyyy-MM-dd HH:mm:ss.SSS)
      * @param filterToTime 结束范围日期(格式: yyyy-MM-dd HH:mm:ss.SSS)
-     * @return
+     * @return whether is within time flag
      */
     public static Boolean withinTime(String targetTime, String filterFromTime, String filterToTime) {
         Boolean isWithinTime = false;
