@@ -32,11 +32,12 @@ public class ExcelResources {
      * @param ignoreNumOfRows ignore line number
      * @param <T> parse bean type
      * @return List of {@link T} objects, which allows you to retrieve row values by name instead of index
-     * @throws IOException
+     * @throws IOException input/ output exception
      * @throws InvocationTargetException invocation target exception
      * @throws IllegalAccessException illegal access exception
      * @throws NoSuchFieldException no such method exception
      * @throws InstantiationException instantiation exception
+     * @throws NoSuchMethodException no such method exception
      */
     public static <T> List<T> parseBeanCollectionFromExcel(Class<T> clazz, String excelFileName, Map<Integer, String> columnMapping, Integer ignoreNumOfRows)
         throws IOException, InvocationTargetException, IllegalAccessException, NoSuchFieldException, InstantiationException, NoSuchMethodException {
