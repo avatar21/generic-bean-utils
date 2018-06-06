@@ -1,37 +1,28 @@
-## Welcome to GitHub Pages
+## Generic Bean Utilities
 
-You can use the [editor on GitHub](https://github.com/avatar21/generic-bean-utils/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Generic Java bean utilities
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Here's are some utility usage ...
 
-### Markdown
+### GenericBeanUtils usage
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Collection of generic bean utility functions
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```java
+Double mDouble = (Double) GenericBeanUtils.parseStringToGenericType(Double.class, "1.2");
+SexEnum sex = (SexEnum) GenericBeanUtils.parseStringToGenericType(SexEnum.class, "MALE");
+Boolean mBoolean = (Boolean) GenericBeanUtils.parseStringToGenericType(Boolean.class, "0");
+Boolean mBoolean2 = (Boolean) GenericBeanUtils.parseStringToGenericType(Boolean.class, "true");
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### CalendarUtils usage
 
-### Jekyll Themes
+Calendar/ Date related functions
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/avatar21/generic-bean-utils/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+```java
+Date startDate = GenericBeanUtils.genericParseDate("2002-03-28");
+Date endDate = GenericBeanUtils.genericParseDate("2002-03-31");
+boolean isSameMonth = CalendarUtils.isSameMonth(startDate, endDate);
+TimeDuration duration = CalendarUtils.calculateTimeDuration(startDate, endDate);
+System.out.println(String.format("time duration = %s", GenericBeanUtils.toJson(duration)));
+```
