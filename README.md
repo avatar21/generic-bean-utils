@@ -1,5 +1,7 @@
 ## Generic Bean Utilities
 
+![maven build status badge](https://github.com/avatar21/generic-bean-utils/actions/workflows/maven.yml/badge.svg)
+
 Generic Java bean utilities
 
 Here's are some utility usage ...
