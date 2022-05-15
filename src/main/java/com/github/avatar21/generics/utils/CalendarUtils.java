@@ -1,10 +1,9 @@
 package com.github.avatar21.generics.utils;
 
-import com.github.avatar21.generics.model.TimeDuration;
 import com.github.avatar21.generics.constants.CalendarUnit;
 import com.github.avatar21.generics.constants.Regexp;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.github.avatar21.generics.model.TimeDuration;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
@@ -15,8 +14,8 @@ import java.util.GregorianCalendar;
 /**
  * calendar/ date utility functions
  */
+@Slf4j
 public class CalendarUtils {
-    private static final Logger logger = LoggerFactory.getLogger(CalendarUtils.class);
 
     /**
      * <p>add one day to given date</p>
@@ -81,17 +80,17 @@ public class CalendarUtils {
         try {
             targetDate = Regexp.DATE_FORMAT_FULL_WITH_MISEC.parse(targetTime);
         } catch (ParseException e) {
-            logger.error(e.getLocalizedMessage());
+            log.error(e.getLocalizedMessage());
         }
         try {
             fromDate = Regexp.DATE_FORMAT_FULL_WITH_MISEC.parse(filterFromTime);
         } catch (ParseException e) {
-            logger.error(e.getLocalizedMessage());
+            log.error(e.getLocalizedMessage());
         }
         try {
             toDate = Regexp.DATE_FORMAT_FULL_WITH_MISEC.parse(filterToTime);
         } catch (ParseException e) {
-            logger.error(e.getLocalizedMessage());
+            log.error(e.getLocalizedMessage());
         }
 
         Calendar calTarget = Calendar.getInstance();
@@ -102,11 +101,11 @@ public class CalendarUtils {
 
         Calendar calTo = Calendar.getInstance();
         calTo.setTime(toDate);
-        logger.debug(String.format("[TEST]\n\t target = %s\n\t from = %s\n\t to = %s",
+        log.debug(String.format("[TEST]\n\t target = %s\n\t from = %s\n\t to = %s",
                 Regexp.DATE_FORMAT_FULL_WITH_MISEC.format(calTarget.getTime()),
                 Regexp.DATE_FORMAT_FULL_WITH_MISEC.format(calFrom.getTime()),
                 Regexp.DATE_FORMAT_FULL_WITH_MISEC.format(calTo.getTime())));
-        logger.debug(String.format("[TEST]\n\t from greater(%s) OR equals(%s)\n\t to greater(%s) OR equals(%s)",
+        log.debug(String.format("[TEST]\n\t from greater(%s) OR equals(%s)\n\t to greater(%s) OR equals(%s)",
                 calFrom.before(calTarget), calFrom.equals(calTarget),
                 calTo.after(calTarget), calTo.equals(calTarget)));
         if ((calFrom.before(calTarget) || calFrom.equals(calTarget)) && (calTo.after(calTarget) || calTo.equals(calTarget))) {
@@ -127,7 +126,7 @@ public class CalendarUtils {
         try {
             date = (!StringUtils.isEmpty(strDate) && strDate.matches(Regexp.DATE_NUMERIC_08_REGEX) ? Regexp.DATE_FORMAT_SHORT_08.parse(strDate.trim()) : null);
         } catch (ParseException e) {
-            logger.error("Error while parsing string to date with format \"yyyyMMdd\"", e);
+            log.error("Error while parsing string to date with format \"yyyyMMdd\"", e);
         }
         return date;
     }
@@ -143,7 +142,7 @@ public class CalendarUtils {
         try {
             date = (!StringUtils.isEmpty(strDate) && strDate.matches(Regexp.DATE_FORMAT_DATE_ONLY_REGEX) ? Regexp.DATE_FORMAT_DATE_ONLY.parse(strDate.trim()) : null);
         } catch (ParseException e) {
-            logger.error("Error while parsing string to date with format \"yyyyMMdd\"", e);
+            log.error("Error while parsing string to date with format \"yyyyMMdd\"", e);
         }
         return date;
     }
@@ -159,7 +158,7 @@ public class CalendarUtils {
         try {
             date = (!StringUtils.isEmpty(strDate) && strDate.matches(Regexp.DATE_NUMERIC_14_REGEX) ? Regexp.DATE_FORMAT_LONG_14.parse(strDate.trim()) : null);
         } catch (ParseException e) {
-            logger.error("Error while parsing string to date with format \"yyyyMMddHHmmss\"", e);
+            log.error("Error while parsing string to date with format \"yyyyMMddHHmmss\"", e);
         }
         return date;
     }

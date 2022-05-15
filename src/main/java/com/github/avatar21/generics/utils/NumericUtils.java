@@ -1,8 +1,7 @@
 package com.github.avatar21.generics.utils;
 
 import com.github.avatar21.generics.constants.Regexp;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
@@ -10,8 +9,8 @@ import java.math.BigDecimal;
 /**
  * numeric utility functions
  */
+@Slf4j
 public class NumericUtils {
-    private static final Logger logger = LoggerFactory.getLogger(NumericUtils.class);
 
     /**
      * 转换字符串为 BigDecimal 类

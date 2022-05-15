@@ -1,8 +1,7 @@
 package com.github.avatar21.generics.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,8 +18,8 @@ import java.util.regex.Pattern;
 /**
  * CSV resources utility functions
  */
+@Slf4j
 public class CSVResources {
-    private static Logger logger = LoggerFactory.getLogger(CSVResources.class);
 
     /**
      * @param token specify the value seperator, by default a "," (comma), "\t" (tab)
@@ -114,18 +113,18 @@ public class CSVResources {
                                 listData.add(obj);
                                 ++parsedRows;
                             } catch (Exception e) {
-                                logger.error(e.getLocalizedMessage());
+                                log.error(e.getLocalizedMessage());
                             }
                         }
                     }
                 }
             } else {
-                logger.error(new StringBuffer()
+                log.error(new StringBuffer()
                         .append("csv file[").append(csvFile)
                         .append("] not found").toString());
             }
         } catch (Exception e) {
-            logger.error("", e);
+            log.error("", e);
         } finally {
             if (csvFile != null) {
                 csvFile = null;
@@ -134,7 +133,7 @@ public class CSVResources {
                 csvFis.close();
             }
         }
-        logger.info(String.format("\uD83D\uDE00 测试数据读入结果 = %d / %d", parsedRows, totalRows));
+        log.info(String.format("\uD83D\uDE00 测试数据读入结果 = %d / %d", parsedRows, totalRows));
 
         return listData;
     }

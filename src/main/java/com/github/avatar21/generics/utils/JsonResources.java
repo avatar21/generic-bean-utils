@@ -2,9 +2,8 @@ package com.github.avatar21.generics.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.avatar21.generics.constants.Regexp;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,8 +15,8 @@ import java.util.List;
 /**
  * JSON utility functions
  */
+@Slf4j
 public class JsonResources {
-    private static Logger logger = LoggerFactory.getLogger(JsonResources.class);
 
     /**
      * <p>parse json file into bean collection</p>
@@ -40,7 +39,6 @@ public class JsonResources {
 
         try {
             // read currency data file
-            //logger.info("csv file = " + csvFile);
             if (jsonFile != null && jsonFile.isFile()) {
                 jsonFis = new FileInputStream(jsonFile);
 
@@ -52,29 +50,26 @@ public class JsonResources {
 
                         if (listData != null && listData.size() > 0) {
                             for (T obj : listData) {
-                                logger.debug(String.format("obj = %s", GenericBeanUtils.toJson(obj)));
+                                log.debug(String.format("obj = %s", GenericBeanUtils.toJson(obj)));
                             }
                         }
                     }
                 }
             } else {
-                logger.error(new StringBuffer()
+                log.error(new StringBuffer()
                         .append("json file[").append(jsonFile)
                         .append("] not found").toString());
             }
         } catch (Exception e) {
-            logger.error("error while parsing bean from json", e);
+            log.error("error while parsing bean from json", e);
             throw e;
         } finally {
             // housekeeping
-            if (jsonFile != null) {
-                jsonFile = null;
-            }
             if (jsonFis != null) {
                 jsonFis.close();
             }
         }
-        logger.info("\uD83D\uDE00 parsed result = {}", GenericBeanUtils.toJson(listData));
+        log.info("\uD83D\uDE00 parsed result = {}", GenericBeanUtils.toJson(listData));
 
         return listData;
     }
@@ -99,7 +94,7 @@ public class JsonResources {
 
         try {
             // read json formatted file
-            logger.debug("valid = {} | {}", (jsonFile != null), (jsonFile.isFile()));
+            log.debug("valid = {} | {}", (jsonFile != null), (jsonFile.isFile()));
             if (jsonFile != null && jsonFile.isFile()) {
                 jsonFis = new FileInputStream(jsonFile);
 
@@ -112,25 +107,22 @@ public class JsonResources {
                     }
                 }
             } else {
-                logger.error(new StringBuffer()
+                log.error(new StringBuffer()
                         .append("json file[").append(jsonFile)
                         .append("] not found").toString());
             }
         } catch (Exception e) {
-            logger.error("error while parsing json to bean", e);
+            log.error("error while parsing json to bean", e);
         } finally {
-            if (jsonFile != null) {
-                jsonFile = null;
-            }
             if (jsonFis != null) {
                 try {
                     jsonFis.close();
                 } catch (IOException e) {
-                    logger.error(e.getLocalizedMessage());
+                    log.error(e.getLocalizedMessage());
                 }
             }
         }
-        logger.info("\uD83D\uDE00 parsed bean = {}", GenericBeanUtils.toJson(bean));
+        log.info("\uD83D\uDE00 parsed bean = {}", GenericBeanUtils.toJson(bean));
 
         return bean;
     }

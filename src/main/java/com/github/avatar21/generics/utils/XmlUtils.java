@@ -1,9 +1,8 @@
 package com.github.avatar21.generics.utils;
 
-import com.sun.org.apache.xml.internal.serialize.OutputFormat;
-import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.xml.serialize.OutputFormat;
+import org.apache.xml.serialize.XMLSerializer;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -20,8 +19,8 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * <p>XML utility functions</p>
  */
+@Slf4j
 public class XmlUtils {
-    private static final Logger logger = LoggerFactory.getLogger(XmlUtils.class);
 
     /**
      * <p>格式化xml内容</p>
@@ -33,20 +32,17 @@ public class XmlUtils {
         try {
 
             Writer out = new StringWriter();
-//            Document document = parseXml(unformattedXml);
-//            OutputFormat format = new OutputFormat(document);
             AtomicReference<Document> document = new AtomicReference<>(parseXml(unformattedXml));
             OutputFormat format = new OutputFormat((Document) document);
             format.setLineWidth(65);
             format.setIndenting(true);
             format.setIndent(2);
             XMLSerializer serializer = new XMLSerializer(out, format);
-//            serializer.serialize(document);
             serializer.serialize((Document) document);
 
             return out.toString();
         } catch (IOException | NullPointerException e) {
-            logger.debug("格式化xml文件异常", e);
+            log.debug("格式化xml文件异常", e);
             return "";
         }
     }
@@ -64,13 +60,13 @@ public class XmlUtils {
             InputSource is = new InputSource(new StringReader(content));
             return db.parse(is);
         } catch (ParserConfigurationException e) {
-            logger.error("获取资源异常", e);
+            log.error("获取资源异常", e);
             throw new RuntimeException(e);
         } catch (SAXException e) {
-            logger.error("获取资源异常", e);
+            log.error("获取资源异常", e);
             throw new RuntimeException(e);
         } catch (IOException e) {
-            logger.debug("获取资源异常, 返回null", e);
+            log.debug("获取资源异常, 返回null", e);
         }
         return null;
     }

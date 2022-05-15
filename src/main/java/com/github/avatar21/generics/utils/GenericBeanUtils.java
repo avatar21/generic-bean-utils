@@ -4,11 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.avatar21.generics.constants.Regexp;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.ConvertUtilsBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
@@ -26,9 +25,8 @@ import java.util.Date;
 /**
  * <p>generic bean utility functions</p>
  */
+@Slf4j
 public class GenericBeanUtils {
-    private static final Logger logger = LoggerFactory.getLogger(GenericBeanUtils.class);
-
     private static ObjectMapper jsonMapper;
     /**
      * <p>
@@ -172,9 +170,9 @@ public class GenericBeanUtils {
                 }
             }
         } catch (IntrospectionException e) {
-            logger.error(e.getLocalizedMessage());
+            log.error(e.getLocalizedMessage());
         } catch (Exception e) {
-            logger.error(e.getLocalizedMessage());
+            log.error(e.getLocalizedMessage());
         }
 
         return null;
@@ -206,7 +204,7 @@ public class GenericBeanUtils {
         try {
             beanUtilsBean.copyProperties(dest, source);
         } catch (ConversionException | IllegalAccessException | InvocationTargetException e) {
-            logger.error("Bean赋值报错", e);
+            log.error("Bean赋值报错", e);
         }
     }
 
@@ -234,7 +232,7 @@ public class GenericBeanUtils {
         try {
             json = getJsonMapper().writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            logger.error("无法解析对象为json格式", e);
+            log.error("无法解析对象为json格式", e);
         }
 
         return json;
@@ -265,7 +263,7 @@ public class GenericBeanUtils {
                 date = null;
             }
         } catch (ParseException e) {
-            logger.error(e.getLocalizedMessage());
+            log.error(e.getLocalizedMessage());
         }
 
         return date;

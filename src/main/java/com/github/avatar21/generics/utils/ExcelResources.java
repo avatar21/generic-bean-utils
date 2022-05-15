@@ -1,7 +1,7 @@
 package com.github.avatar21.generics.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtilsBean;
-import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -20,8 +20,8 @@ import java.util.Map;
 /**
  * Excel resources utility functions
  */
+@Slf4j
 public class ExcelResources {
-    private static Logger logger = Logger.getLogger(ExcelResources.class);
 
     /**
      * read from a "*.csv" file, return a List (row) of Maps
@@ -79,7 +79,7 @@ public class ExcelResources {
                         String fieldName = columnMapping.get(key);
                         Class<?> fieldClazz = GenericBeanUtils.getDeclaredField(clazz, fieldName).getType();
 
-                        switch (cell.getCellTypeEnum()) {
+                        switch (cell.getCellType()) {
                             case STRING:
                                 cellVal = cell.getStringCellValue();
                                 break;
@@ -106,7 +106,7 @@ public class ExcelResources {
                 listData.add(instance);
             }
         }
-        logger.info(String.format("\uD83D\uDE00 测试数据读入结果 = %d / %d", parsedRows, totalRows));
+        log.info(String.format("\uD83D\uDE00 测试数据读入结果 = %d / %d", parsedRows, totalRows));
 
         return listData;
     }
@@ -132,7 +132,7 @@ public class ExcelResources {
                 throw new FileNotFoundException(String.format("Following path not found: \"%s\"", fileName));
             }
         } catch (IOException | InvocationTargetException | IllegalAccessException | NoSuchFieldException | InstantiationException | NoSuchMethodException e) {
-            logger.error(e.getLocalizedMessage());
+            log.error(e.getLocalizedMessage());
         }
         return result;
     }

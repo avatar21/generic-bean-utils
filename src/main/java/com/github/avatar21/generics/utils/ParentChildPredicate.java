@@ -2,8 +2,7 @@ package com.github.avatar21.generics.utils;
 
 import com.github.avatar21.generics.handler.DefaultPredicateHandler;
 import com.github.avatar21.generics.model.IPredicate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
@@ -11,8 +10,8 @@ import java.util.Collection;
 /**
  * generic parent child filterable/ parsable/ aggregate-able utility function
  */
+@Slf4j
 public class ParentChildPredicate {
-    private static final Logger logger = LoggerFactory.getLogger(ParentChildPredicate.class);
 
     /**
      * <p>
@@ -44,7 +43,7 @@ public class ParentChildPredicate {
                         }
                     }
                 } catch (InvocationTargetException | IllegalAccessException e) {
-                    logger.error(e.getLocalizedMessage());
+                    log.error(e.getLocalizedMessage());
                 }
             }
         }
