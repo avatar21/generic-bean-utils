@@ -19,7 +19,7 @@
         <commons-io.version>2.11.0</commons-io.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <log4j.version>1.7.36</log4j.version>
-        <jackson.version>2.13.2.2</jackson.version>
+        <jackson.version>2.13.4.1</jackson.version>
         <poi.version>5.2.2</poi.version>
         <spring.version>5.3.19</spring.version>
     </properties>
